@@ -1,0 +1,28 @@
+tests/test_v081_mcp.py
+  50d95e9100439f93 40-41,47-79
+src/memkraft/mcp.py
+  50d95e9100439f93 55-59,105-130
+src/memkraft/mcp_admin.py
+  50d95e9100439f93 122,138,140-150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "3f293a242f24f9f398facb6d8e30ae180fca17b0",
+  "prompts": {
+    "50d95e9100439f93": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019dbc49-4405-7652-bfc9-a963deeeab3c",
+        "model": "gpt-5.4"
+      },
+      "human_author": "swain",
+      "messages": [],
+      "total_additions": 84,
+      "total_deletions": 9,
+      "accepted_lines": 81,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/08ca84f3a6decbe83c1bf2fc209f31ea5b5980d9ccb6f529c31ef451d5b732aa"
+    }
+  }
+}
