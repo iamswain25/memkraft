@@ -12,6 +12,21 @@ from memkraft import MemKraft
 from memkraft import mcp as mcp_mod
 
 
+def test_truncate_utf8_keeps_search_response_within_8kb():
+    text = "가" * 10_000
+
+    truncated = mcp_mod._truncate_utf8(text)
+
+    assert len(truncated.encode("utf-8")) <= 8 * 1024
+    assert truncated.endswith("\n...[truncated]")
+
+
+def test_truncate_utf8_leaves_short_response_unchanged():
+    text = "short result"
+
+    assert mcp_mod._truncate_utf8(text) == text
+
+
 @pytest.fixture
 def mk():
     d = tempfile.mkdtemp(prefix="mk-mcp-")

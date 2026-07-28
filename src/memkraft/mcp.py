@@ -99,6 +99,22 @@ def _tool_schemas() -> list:
     ]
 
 
+MCP_SEARCH_MAX_BYTES = 8 * 1024
+
+
+def _truncate_utf8(text: str, max_bytes: int = MCP_SEARCH_MAX_BYTES) -> str:
+    """Keep MCP search responses within the connector's byte budget."""
+    encoded = text.encode("utf-8")
+    if len(encoded) <= max_bytes:
+        return text
+
+    marker = "\n...[truncated]"
+    available = max_bytes - len(marker.encode("utf-8"))
+    if available <= 0:
+        return marker.encode("utf-8")[:max_bytes].decode("utf-8", errors="ignore")
+    return encoded[:available].decode("utf-8", errors="ignore") + marker
+
+
 def dispatch(mk, name: str, args: Dict[str, Any]) -> Any:
     """Pure dispatch — no MCP dependency. Unit-testable."""
     if name == "remember":
@@ -181,7 +197,8 @@ def main() -> None:
     async def _call_tool(name: str, arguments: Dict[str, Any]):
         try:
             result = dispatch(mk, name, arguments or {})
-            return [types.TextContent(type="text", text=str(result))]
+            text = _truncate_utf8(str(result)) if name == "search" else str(result)
+            return [types.TextContent(type="text", text=text)]
         except Exception as e:
             return [types.TextContent(type="text", text=f"error: {e}")]
 
