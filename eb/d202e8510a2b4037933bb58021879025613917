@@ -1,0 +1,31 @@
+src/memkraft/mcp.py
+  s_ae4d4b06d38752::t_950ddc7a99fb66 19-20,129-134,162
+tests/test_v081_mcp.py
+  s_ae4d4b06d38752::t_ceaf5154683d0a 87-109
+  s_ae4d4b06d38752::t_950ddc7a99fb66 2-3,47,50-86,110-111
+  s_ae4d4b06d38752::t_5e7a27af46cdf8 112-113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "ebd202e8510a2b4037933bb58021879025613917",
+  "prompts": {},
+  "sessions": {
+    "s_63df37194bc36b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fabc4-2fee-7172-ac38-5e7055899c0f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "swain <iamswain@hotmail.com>"
+    },
+    "s_ae4d4b06d38752": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa26-b26e-7253-b59d-a6b5c4d96192",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "swain <iamswain@hotmail.com>"
+    }
+  }
+}
