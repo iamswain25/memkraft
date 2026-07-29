@@ -16,6 +16,8 @@ Exposes four tools:
 """
 from __future__ import annotations
 
+import contextlib
+import io
 import sys
 from typing import Any, Dict
 
@@ -169,6 +171,12 @@ def dispatch(mk, name: str, args: Dict[str, Any]) -> Any:
     raise ValueError(f"unknown tool: {name}")
 
 
+def _dispatch_for_mcp(mk, name: str, args: Dict[str, Any]) -> Any:
+    """Dispatch without allowing CLI output to corrupt MCP's stdout transport."""
+    with contextlib.redirect_stdout(io.StringIO()):
+        return dispatch(mk, name, args)
+
+
 def main() -> None:
     _require_mcp()
 
@@ -196,7 +204,7 @@ def main() -> None:
     @server.call_tool()
     async def _call_tool(name: str, arguments: Dict[str, Any]):
         try:
-            result = dispatch(mk, name, arguments or {})
+            result = _dispatch_for_mcp(mk, name, arguments or {})
             text = _truncate_utf8(str(result)) if name == "search" else str(result)
             return [types.TextContent(type="text", text=text)]
         except Exception as e:
